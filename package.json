@@ -1,7 +1,7 @@
 {
   "name": "food_order_backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "tsc",
     "start": "nodemon --exec ts-node index.ts",
