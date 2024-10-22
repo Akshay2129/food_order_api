@@ -1,17 +1,18 @@
-// routes/vandorRoute.js
 const express = require('express');
 const { AddFood, GetFoods, GetVandorProfile, UpdateVandorProfile, UpdateVandorService, VandorLogin } = require('../controllers/VandorController');
+const { Authenticate } = require('../Middleware/Authenticate'); // Import the Authenticate middleware
 
 const routes = express.Router();
 
+// Login route - does not require authentication
 routes.post('/login', VandorLogin);
 
-// Authenticate middleware for protecting routes
-routes.get('/profile', GetVandorProfile);
-routes.put('/profile', UpdateVandorProfile);
-routes.put('/service', UpdateVandorService);
+// Protect the following routes with the Authenticate middleware
+routes.get('/profile', Authenticate, GetVandorProfile);
+routes.put('/profile', Authenticate, UpdateVandorProfile);
+routes.put('/service', Authenticate, UpdateVandorService);
 
-routes.post('/food', AddFood);
+routes.post('/food', Authenticate, AddFood);
 routes.get('/foods', GetFoods);
 
 // Basic route to test the Vandor endpoint
