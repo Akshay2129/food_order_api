@@ -1,8 +1,10 @@
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import { AdminRoute, VandorRoutes } from './routes';
-import { MONGO_URL } from './config';
+// index.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const AdminRoute = require('./routes/AdminRoutes'); // Import the admin route
+const VandorRoutes = require('./routes/VandorRoutes'); // Import the vandor route
+const { MONGO_URL } = require('./config/config'); // Import the MongoDB URL
 
 const app = express();
 
@@ -18,18 +20,18 @@ app.use('/vandor', VandorRoutes);
 const connectDB = async () => {
     try {
         await mongoose.connect(MONGO_URL, {
-            //useNewUrlParser: true,
-           // useUnifiedTopology: true
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
         });
         console.log('Connected to MongoDB');
     } catch (err) {
         console.error('Could not connect to MongoDB:', err);
-        process.exit(1); 
+        process.exit(1);
     }
 };
+
 // Start the server
 app.listen(8000, () => {
     connectDB();
-    console.clear();
     console.log('Server is running on port 8000');
 });

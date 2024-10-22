@@ -1,19 +1,8 @@
-import mongoose, { Schema, Document, model } from "mongoose";
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
-interface FoodDoc extends Document {
-    vandorId: string;
-    name: string;
-    description: string;
-    category: string;
-    foodType: string;
-    readyTime: number;
-    price: number;
-    rating: number;
-    images: [string]
-}
-
-const foodSchema = new Schema<FoodDoc>({
-
+// Define the schema for the Food model
+const foodSchema = new Schema({
     vandorId: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -26,16 +15,16 @@ const foodSchema = new Schema<FoodDoc>({
 }, {
     toJSON: {
         transform: (doc, ret) => {
-
             delete ret.__v;
             delete ret.createAt;
             delete ret.updatedAt;
             return ret;
         },
     },
-    timestamps: true,
+    timestamps: true, // automatically adds createdAt and updatedAt fields
 });
 
-const Food = model<FoodDoc>('food', foodSchema);
+// Create the Food model using the schema
+const Food = model('Food', foodSchema);
 
-export { Food };
+module.exports = { Food };
