@@ -14,7 +14,7 @@ interface VandorDoc extends Document {
     serviceAvailable: boolean;
     coverImages: [string];
     rating: number;
-    // foods: any;
+    foods: any;
 }
 
 const VandorSchema = new Schema<VandorDoc>({
@@ -30,9 +30,9 @@ const VandorSchema = new Schema<VandorDoc>({
     serviceAvailable: { type: Boolean, },
     coverImages: { type: [String], required: false },
     rating: { type: Number, },
-    // foods: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Food" }]
+    foods: [{ type: mongoose.SchemaTypes.ObjectId, ref: "food" }]
 }, {
-    toJSON:{
+    toJSON: {
         transform: (doc, ret) => {
             delete ret.password;
             delete ret.salt;
