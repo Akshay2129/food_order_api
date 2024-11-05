@@ -78,8 +78,6 @@ const UpdateVandorService = async (req, res, next) => {
 
     return res.json({ "message": "Vandor information not found" });
 };
-
-// Add Food
 const AddFood = async (req, res, next) => {
     const user = req.user;
 
@@ -89,6 +87,10 @@ const AddFood = async (req, res, next) => {
         const vandor = await Findvandor(user._id.toString());
 
         if (vandor != null) {
+            // Check if files were uploaded
+            const images = req.files ? req.files.map(file => file.path) : []; // Default to an empty array if no files
+            console.log(req.files); // Log the files received
+
             const createFood = await Food.create({
                 vandorId: vandor._id,
                 name: name,
@@ -97,7 +99,7 @@ const AddFood = async (req, res, next) => {
                 foodType: foodType,
                 readyTime: readyTime,
                 price: price,
-                images: ["asdsad"],
+                images: images, // Store uploaded images
                 rating: 0
             });
             vandor.foods.push(createFood);
